@@ -161,6 +161,19 @@ def show_yellows(lst):
             yellows.append(ch)
     return yellows
 
+def reset(wordlist,yellowlist,graylist):
+
+    with open("Result_words.txt", "w") as resultfile:
+        pass
+    
+    wordlist.clear()
+
+    yellowlist.clear()
+
+    graylist.clear()
+
+    return "*****"
+
     
 
 possible_solutions = initiate_answer_list()
@@ -174,7 +187,8 @@ while True:
     print("")
     print("\n1.Green Letters:")
     print("2.Yellow letters")
-    print("3.Gray letters\n")
+    print("3.Gray letters")
+    print("4.Reset\n")
     
     option = input()
 
@@ -196,6 +210,13 @@ while True:
     elif option == "3":
             possible_solutions = filter_by_gray_letters()
             update_solutions_file(possible_solutions)
+    
+    elif option == "4":
+        print("Are you sure you want to reset the helper?")
+        option = input("Y - Yes      N - No\n\n")
+
+        if(option.upper() == "Y"):
+            solution = reset(possible_solutions,yellow_letters,gray_letters_list)
 
 
 
