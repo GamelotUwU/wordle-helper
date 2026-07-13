@@ -89,7 +89,7 @@ def modify_solution_word(hint, solution):
 
     if(not valid): hint = fix_input(hint)
 
-    if solution == "":
+    if solution == "*****":
         solution = hint
 
     word = ""
