@@ -4,7 +4,6 @@ yellow_letters = []
 gray_letters_list = []
 allowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZ*"
 
-from validation import check_validity, fix_input
 from filters import filter_by_greens, filter_by_yellows, filter_by_gray_letters, modify_solution_word, add_yellows
 from storage import initiate_answer_list, update_solutions_file
 
