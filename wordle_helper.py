@@ -5,6 +5,7 @@ gray_letters_list = []
 allowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZ*"
 
 from validation import check_validity, fix_input
+from filters import filter_by_greens, filter_by_yellows, filter_by_gray_letters
 
 def initiate_answer_list():
 
@@ -12,46 +13,6 @@ def initiate_answer_list():
         wordlist = textfile.read().splitlines("\n")
 
     return wordlist
-
-def filter_by_greens(solution):
-
-    temp_list = []
-
-    valid_characters = 0
-    for char in solution:
-        if char != "*":
-            valid_characters += 1
-    
-    for word in possible_solutions:
-        matching_chars = valid_characters
-        for i in range(len(solution)):
-            if solution[i] == "*":
-                pass
-            elif word[i] == solution[i]:
-                matching_chars -= 1
-
-        if(matching_chars == 0):
-            temp_list.append(word)
-                
-    print(f"List size:{len(temp_list)}")
-
-    return temp_list
-
-def filter_by_yellows(word_lst,yellow_lst):
-
-    temp_list = []
-    yellows_needed = len(yellow_lst)
-
-    for word in word_lst:
-        remaining_chars = yellows_needed
-        for ch,position in yellow_lst:
-            if ch in word and ch != word[position]:
-                remaining_chars -= 1
-        if(remaining_chars == 0):
-            temp_list.append(word)
-
-    
-    return temp_list
 
 def modify_solution_word(hint, solution):
     
@@ -80,28 +41,6 @@ def modify_solution_word(hint, solution):
             word += "*"
 
     return word
-
-def filter_by_gray_letters():
-
-    temp_list = []
-
-    print("Type the gray letters:")
-    input_grays = input().split()
-    for char in input_grays:
-        if char not in gray_letters_list:
-            gray_letters_list.append(char)
-
-    gray_chars = len(gray_letters_list)
-
-    for word in possible_solutions:
-        remaining_chars = gray_chars
-        for char in gray_letters_list:
-            if char not in word:
-                remaining_chars -= 1
-        if(remaining_chars == 0):
-            temp_list.append(word)
-
-    return temp_list                  
 
 def update_solutions_file(solutions):
 
@@ -151,7 +90,6 @@ def reset(wordlist,yellowlist,graylist):
 
     return "*****"
 
-    
 
 possible_solutions = initiate_answer_list()
 
@@ -175,7 +113,7 @@ while True:
     elif option == "1":
         hint = input("(Please use '*' for empty spots)\nType known letters:").upper()
         solution = modify_solution_word(hint, solution)
-        possible_solutions = filter_by_greens(solution) 
+        possible_solutions = filter_by_greens(solution, possible_solutions)
         update_solutions_file(possible_solutions)
 
     elif option == "2":
@@ -185,7 +123,7 @@ while True:
             update_solutions_file(possible_solutions)
 
     elif option == "3":
-            possible_solutions = filter_by_gray_letters()
+            possible_solutions = filter_by_gray_letters(gray_letters_list,possible_solutions)
             update_solutions_file(possible_solutions)
     
     elif option == "4":
