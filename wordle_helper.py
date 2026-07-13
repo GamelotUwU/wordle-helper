@@ -4,30 +4,7 @@ yellow_letters = []
 gray_letters_list = []
 allowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZ*"
 
-def fix_input(hint):
-
-    valid_input = ""
-
-    for char in hint:
-        if (char.isalpha()):
-            valid_input += char
-        else:
-            if(char == "*"):
-                valid_input += char
-            else:
-                char = "*"
-                valid_input += char
-    return valid_input
-
-def check_validity(hint):
-
-    valid = True
-
-    for char in hint:
-        if char not in allowed:
-            valid = False
-            break
-    return valid
+from validation import check_validity, fix_input
 
 def initiate_answer_list():
 
@@ -85,7 +62,7 @@ def modify_solution_word(hint, solution):
                 print("Hint should be 5 letters long!")
                 hint = input("Type known letters:")
 
-    valid = check_validity(hint)
+    valid = check_validity(hint, allowed)
 
     if(not valid): hint = fix_input(hint)
 
@@ -142,7 +119,7 @@ def add_yellows(lst):
             print("Hint should be 5 letters long!")
             hint = input("Yellow letters in word:")
 
-    valid = check_validity(hint)
+    valid = check_validity(hint, allowed)
 
     if(not valid): hint = fix_input(hint)
 
