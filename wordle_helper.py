@@ -5,58 +5,8 @@ gray_letters_list = []
 allowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZ*"
 
 from validation import check_validity, fix_input
-from filters import filter_by_greens, filter_by_yellows, filter_by_gray_letters
+from filters import filter_by_greens, filter_by_yellows, filter_by_gray_letters, modify_solution_word, add_yellows
 from storage import initiate_answer_list, update_solutions_file
-
-def modify_solution_word(hint, solution):
-    
-    while True: 
-            if (len(hint) == 5):
-                break
-            else:
-                print("Hint should be 5 letters long!")
-                hint = input("Type known letters:")
-
-    valid = check_validity(hint, allowed)
-
-    if(not valid): hint = fix_input(hint)
-
-    if solution == "*****":
-        solution = hint
-
-    word = ""
-    
-    for i in range(len(solution)):
-        if solution[i] != "*":
-            word += solution[i]
-        elif solution[i] == "*" and hint[i] != "*":
-            word += hint[i]
-        else:
-            word += "*"
-
-    return word
-
-def add_yellows(lst):
-    hint = input("Yellow letters:").upper()
-
-    while True: 
-        if (len(hint) == 5):
-            break
-        else:
-            print("Hint should be 5 letters long!")
-            hint = input("Yellow letters in word:")
-
-    valid = check_validity(hint, allowed)
-
-    if(not valid): hint = fix_input(hint)
-
-    for i in range(len(hint)):
-        if(hint[i] == "*"):
-            pass
-        else:
-            pair = (hint[i], i)
-            if pair not in lst:
-                lst.append(pair)
 
 def show_yellows(lst):
     yellows = []
@@ -100,13 +50,13 @@ while True:
 
     elif option == "1":
         hint = input("(Please use '*' for empty spots)\nType known letters:").upper()
-        solution = modify_solution_word(hint, solution)
+        solution = modify_solution_word(hint, solution, allowed)
         possible_solutions = filter_by_greens(solution, possible_solutions)
         update_solutions_file(possible_solutions)
 
     elif option == "2":
-            
-            add_yellows(yellow_letters)
+            hint = input("Yellow letters:").upper()
+            add_yellows(yellow_letters, allowed, hint)
             possible_solutions = filter_by_yellows(possible_solutions,yellow_letters)
             update_solutions_file(possible_solutions)
 

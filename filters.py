@@ -1,3 +1,54 @@
+from validation import check_validity, fix_input
+
+def modify_solution_word(hint, solution, string):
+    
+    while True: 
+            if (len(hint) == 5):
+                break
+            else:
+                print("Hint should be 5 letters long!")
+                hint = input("Type known letters:").upper()
+
+    valid = check_validity(hint, string)
+
+    if(not valid): hint = fix_input(hint)
+
+    if solution == "*****":
+        solution = hint
+
+    word = ""
+    
+    for i in range(len(solution)):
+        if solution[i] != "*":
+            word += solution[i]
+        elif solution[i] == "*" and hint[i] != "*":
+            word += hint[i]
+        else:
+            word += "*"
+
+    return word
+
+def add_yellows(lst, string, hint):
+    
+    while True: 
+        if (len(hint) == 5):
+            break
+        else:
+            print("Hint should be 5 letters long!")
+            hint = input("Yellow letters in word:")
+
+    valid = check_validity(hint, string)
+
+    if(not valid): hint = fix_input(hint)
+
+    for i in range(len(hint)):
+        if(hint[i] == "*"):
+            pass
+        else:
+            pair = (hint[i], i)
+            if pair not in lst:
+                lst.append(pair)
+
 def filter_by_greens(solution, result_list):
 
     temp_list = []
