@@ -6,13 +6,7 @@ allowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZ*"
 
 from validation import check_validity, fix_input
 from filters import filter_by_greens, filter_by_yellows, filter_by_gray_letters
-
-def initiate_answer_list():
-
-    with open("Wordle_words_list.txt", "r") as textfile:
-        wordlist = textfile.read().splitlines("\n")
-
-    return wordlist
+from storage import initiate_answer_list, update_solutions_file
 
 def modify_solution_word(hint, solution):
     
@@ -41,12 +35,6 @@ def modify_solution_word(hint, solution):
             word += "*"
 
     return word
-
-def update_solutions_file(solutions):
-
-    with open("Result_words.txt", "w") as solutions_file:
-        for word in solutions:
-            solutions_file.write(word)
 
 def add_yellows(lst):
     hint = input("Yellow letters:").upper()
