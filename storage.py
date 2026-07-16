@@ -1,6 +1,8 @@
+from pathlib import Path
+
 def initiate_answer_list():
 
-    with open("Wordle_words_list.txt", "r") as textfile:
+    with open(Path(__file__).parent/"Wordle_words_list.txt", "r") as textfile:
         wordlist = textfile.read().splitlines("\n")
 
     return wordlist
